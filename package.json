@@ -1,0 +1,14 @@
+{
+  "name": "poker-bot-arena",
+  "version": "1.0.0",
+  "description": "No-limit Texas Hold'em in the browser where you write poker bots in Kicker, a small rule-based language, then pit them against each other, built-in personalities, friends, or yourself.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node --test",
+    "gen:preflop": "node tools/gen-preflop.mjs",
+    "gen:docs": "node tools/gen-docs.mjs"
+  }
+}
