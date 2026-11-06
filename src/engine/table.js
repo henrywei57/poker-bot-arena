@@ -306,7 +306,7 @@ export class Hand {
     rec.to = rec.to ?? p.streetBet;
     p.lastAction = rec;
     this.actions.push({ street: this.street, idx: i, seat: p.seat, ...rec });
-    this.events.push({ type: 'action', seat: p.seat, street: this.street, ...rec });
+    this.events.push({ ...rec, type: 'action', action: rec.type, seat: p.seat, street: this.street });
 
     if (this.liveCount() === 1) { this._endRound(); return; }
     const nxt = this._findActor(this.next(i));
@@ -360,22 +360,26 @@ export class Hand {
     this.phase = 'roundEnd';
   }
 
-  /** Main pot and side pots from each player's total contribution. */
-  computePots() {
+  /**
+   * Main pot and side pots from each player's total contribution.
+   * collectedOnly: ignore bets still in front of players (for display mid-round).
+   */
+  computePots(collectedOnly = false) {
+    const put = (p) => p.totalBet - (collectedOnly ? p.streetBet : 0);
     const liveIdx = [];
     for (let i = 0; i < this.n; i++) if (!this.players[i].folded) liveIdx.push(i);
-    const levels = [...new Set(liveIdx.map((i) => this.players[i].totalBet))].sort((a, b) => a - b);
+    const levels = [...new Set(liveIdx.map((i) => put(this.players[i])))].sort((a, b) => a - b);
     const pots = [];
     let prev = 0;
     for (const level of levels) {
       let amount = 0;
-      for (const p of this.players) amount += Math.max(0, Math.min(p.totalBet, level) - prev);
-      const eligible = liveIdx.filter((i) => this.players[i].totalBet >= level);
+      for (const p of this.players) amount += Math.max(0, Math.min(put(p), level) - prev);
+      const eligible = liveIdx.filter((i) => put(this.players[i]) >= level);
       if (amount > 0) pots.push({ amount, eligible });
       prev = level;
     }
     let leftover = 0;
-    for (const p of this.players) leftover += Math.max(0, p.totalBet - prev);
+    for (const p of this.players) leftover += Math.max(0, put(p) - prev);
     if (leftover > 0) {
       if (pots.length) pots[pots.length - 1].amount += leftover;
       else pots.push({ amount: leftover, eligible: liveIdx });

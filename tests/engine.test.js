@@ -264,3 +264,26 @@ test('busted players are skipped and the button skips empty seats', () => {
   assert.equal(h.players[h.buttonIdx].seat, 0);
   assert.equal(h.players[h.sbIdx].seat, 3);
 });
+
+test('action events keep type "action" and record what was done', () => {
+  const t = makeTable([1000, 1000, 1000], { button: 0 });
+  const h = t.startHand();
+  h.act('raise', 60);
+  h.act('call');
+  h.act('fold');
+  const acts = h.events.filter((e) => e.type === 'action');
+  assert.deepEqual(acts.map((e) => e.action), ['raise', 'call', 'fold']);
+  assert.deepEqual(acts.map((e) => e.seat), [0, 1, 2]);
+  assert.equal(acts[0].to, 60);
+  assert.equal(acts[1].amount, 50);
+});
+
+test('display pots ignore uncalled bets and only split when someone is all-in', () => {
+  const t = makeTable([1000, 1000, 1000], { button: 0 });
+  const h = t.startHand();
+  h.act('call'); h.act('call'); h.act('check');
+  h.advance(); // flop, pot 60
+  h.act('raise', 40); // bet in front of a player, not yet collected
+  assert.deepEqual(h.computePots(true).map((p) => p.amount), [60]);
+  assert.deepEqual(h.computePots().map((p) => p.amount), [60, 40]);
+});
