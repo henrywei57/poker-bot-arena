@@ -1,6 +1,6 @@
 // Bot Lab: write, check, test and share Kicker bots.
 
-import { h, icon, btn, segmented, modal, confirmDialog, copyText, toast } from '../dom.js';
+import { h, icon, btn, segmented, modal, confirmDialog, copyText, toast, fill } from '../dom.js';
 import { CodeEditor, highlightHTML } from '../editor.js';
 import { cardEl } from '../cards.js';
 import { lineChart } from '../chart.js';
@@ -44,6 +44,7 @@ export function renderLab(main, param) {
       mine.length ? h('div', { class: 'bot-list' }, mine.map(item)) : h('p', { class: 'muted small' }, 'No bots yet. Press New, or duplicate a built-in one.'),
       h('label', { class: 'btn sm ghost import-btn' }, icon('upload', 15), h('span', null, 'Import .kick file'),
         h('input', { type: 'file', accept: '.kick,.txt,text/plain', hidden: true, onChange: (e) => importFile(e.target) })),
+      h('a', { href: '#/tutorial', class: 'btn sm ghost import-btn' }, icon('play', 15), h('span', null, 'Video tutorial')),
       h('h3', null, 'Built-in'),
       h('div', { class: 'bot-list' }, builtinBots().map(item)));
   };
@@ -262,7 +263,7 @@ export function renderLab(main, param) {
     }).sort((a, b) => b.net - a.net);
     const me = rows.find((r) => r.id === 'me');
     const rank = rows.indexOf(me) + 1;
-    out.replaceChildren(
+    fill(out,
       h('div', { class: `verdict ${me.bb100 >= 0 ? 'good' : 'bad'}` },
         h('b', null, `${me.bb100 >= 0 ? '+' : ''}${me.bb100.toFixed(1)} BB/100`),
         h('span', null, ` · ranked ${rank} of ${rows.length} over ${played.toLocaleString()} hands`)),
@@ -336,7 +337,7 @@ export function renderLab(main, param) {
     const allVars = Object.keys(VARIABLES);
     const details = h('details', { class: 'all-values' }, h('summary', null, `All ${allVars.length} built-in values for this spot`),
       h('div', { class: 'kv-grid' }, allVars.map((k) => [h('code', null, k), h('span', null, val(k))])));
-    out.replaceChildren(
+    fill(out,
       h('div', { class: 'spot-cards' },
         h('div', null, h('small', null, 'Your cards'), h('div', { class: 'card-row' }, view.hole.map((c) => cardEl(c)))),
         h('div', null, h('small', null, view.board.length ? 'Board' : 'Board (preflop)'), h('div', { class: 'card-row' }, view.board.length ? view.board.map((c) => cardEl(c)) : h('span', { class: 'muted' }, 'No cards yet')))),
@@ -357,6 +358,7 @@ export function renderLab(main, param) {
     if (intent.type === 'raise' && action.type !== 'raise') return ` (wanted to raise, but raising isn’t allowed here, so it ${action.type}s)`;
     if (intent.type === 'fold' && action.type === 'check') return ' (fold turned into a free check)';
     if (intent.type === 'check' && action.type === 'fold') return ' (check means fold when facing a bet)';
+    if (intent.type === 'call' && action.type === 'check') return ' (call is a free check when nobody has bet)';
     return '';
   }
 

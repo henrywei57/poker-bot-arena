@@ -22,6 +22,12 @@ on postflop
 end
 ```
 
+## Video tutorial
+
+[![Coding tutorial: build your first poker bot (narrated video)](media/tutorial-poster.jpg)](https://henrywei57.github.io/poker-bot-arena/#/tutorial)
+
+**[Watch the coding tutorial](https://henrywei57.github.io/poker-bot-arena/#/tutorial)** (about 4 minutes, narrated, with captions and chapters). It writes a bot from an empty editor, shows a typo being caught, debugs it with *Try a spot*, benchmarks it over 1,000 hands and watches it play. You can also [download the MP4](media/tutorial.mp4).
+
 ## What you can do
 
 - **Play vs bots.** Sit down yourself with up to eight bots. Fold / call / raise buttons, a bet slider with pot-size presets, and keyboard shortcuts (F, C, R, A).
@@ -85,6 +91,20 @@ npm test       # engine, evaluator, language, session and tournament tests
 
 Other scripts: `npm run gen:preflop` rebuilds the preflop equity table, `npm run gen:docs` rebuilds `docs/LANGUAGE.md` from the built-in definitions.
 
+### Re-recording the tutorial video
+
+The video is made by a script, not by hand: `tools/tutorial/record.mjs` drives the real app in headless Chrome (typing, clicking, a drawn-on cursor and callouts from `tools/tutorial/overlay.js`), captures every frame, narrates each beat of `tools/tutorial/script.mjs` with a built-in Windows voice, and assembles `media/tutorial.mp4` with captions and chapters. It needs Windows, Google Chrome and [ffmpeg](https://ffmpeg.org/) on your PATH.
+
+```bash
+npm install
+```
+
+```bash
+npm run video
+```
+
+Edit `tools/tutorial/script.mjs` to change what it says or does. Set `TUTORIAL_VOICE` to use another installed voice (for example `Microsoft David Desktop`).
+
 ## How it is built
 
 Plain JavaScript modules, no framework.
@@ -97,7 +117,8 @@ src/sim/       live session (pacing, logs, snapshots), headless runner, stats, t
 src/net/       online host and guest over PeerJS
 src/ui/        table renderer, card art (SVG), action bar, editor, chart, screens
 tests/         node:test suites
-tools/         preflop table and docs generators, dev server
+tools/         preflop table and docs generators, dev server, tutorial video recorder
+media/         the tutorial video, its captions, chapters and poster
 ```
 
 The rules engine follows standard no-limit rules, and the tests check them:

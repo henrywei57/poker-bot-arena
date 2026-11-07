@@ -113,6 +113,7 @@ main.wide { max-width: 1680px; padding-top: 14px; }
 .btn:hover:not(:disabled) { background: var(--surface-3); border-color: #3a5a92; }
 .btn:active:not(:disabled) { transform: translateY(1px); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+a.btn { text-decoration: none; }
 .btn.primary { background: linear-gradient(180deg, #4f8fff, #2f6fe6); border-color: #5d97ff; color: #fff; box-shadow: 0 6px 18px rgba(47, 111, 230, 0.35); }
 .btn.primary:hover:not(:disabled) { background: linear-gradient(180deg, #62a0ff, #3a7cf2); }
 .btn.ghost { background: transparent; border-color: transparent; }
@@ -561,7 +562,11 @@ table.data.compact td, table.data.compact th { padding: 6px 7px; }
 .bot-item-name b { font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bot-item-name small { color: var(--muted); font-size: 0.74rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .import-btn { margin-top: 8px; cursor: pointer; width: 100%; }
-.lab-main { display: flex; flex-direction: column; min-height: calc(100vh - 110px); overflow: hidden; }
+.lab-main { display: flex; flex-direction: column; min-height: calc(100vh - 110px); overflow: hidden; container-type: inline-size; }
+@container (max-width: 680px) {
+  .lab-toolbar .btn:not(.primary) span { display: none; }
+  .lab-toolbar .btn:not(.primary) { padding: 6px; }
+}
 .lab-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .lab-name { display: flex; align-items: center; gap: 9px; font-size: 1.02rem; }
 .lab-banner { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; padding: 8px 14px; font-size: 0.86rem; color: var(--text-2); background: rgba(76, 141, 255, 0.08); border-bottom: 1px solid var(--border); }
@@ -627,6 +632,22 @@ table.data.compact td, table.data.compact th { padding: 6px 7px; }
 .ref-type { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 1px 6px; border: 1px solid var(--border-2); border-radius: 6px; }
 .ref-group h4 { margin-top: 18px; color: var(--accent-2); }
 
+/* -------------------------------------------------------------- tutorial */
+.tutorial .eyebrow { margin-bottom: 6px; }
+.tut-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: start; }
+.tut-grid.lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 18px; }
+.tut-player { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border-2); background: #000; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55); }
+.tut-video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.chapters { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.chapter, .cue { display: flex; gap: 10px; width: 100%; padding: 7px 9px; border-radius: 9px; border: 1px solid transparent; background: none; color: var(--text-2); font: 500 0.9rem var(--font); text-align: left; cursor: pointer; }
+.chapter:hover, .cue:hover { background: var(--surface-2); color: var(--text); }
+.chapter.on, .cue.on { background: var(--accent-soft); border-color: rgba(76, 141, 255, 0.4); color: #fff; }
+.chapter-time { flex: none; min-width: 38px; font: 600 0.8rem var(--mono); color: var(--accent-2); padding-top: 1px; }
+.tut-actions { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+.transcript { max-height: 460px; overflow: auto; display: flex; flex-direction: column; gap: 1px; }
+.cue { font-size: 0.86rem; line-height: 1.45; }
+.tut-side .chapter { font-weight: 600; }
+
 /* ---------------------------------------------------------- cards screen */
 .style-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .panel.sticky { position: sticky; top: 76px; }
@@ -660,6 +681,7 @@ table.data.compact td, table.data.compact th { padding: 6px 7px; }
   .nav-link { padding: 8px; }
 }
 @media (max-width: 900px) {
+  .tut-grid, .tut-grid.lower { grid-template-columns: 1fr; }
   .hero { grid-template-columns: 1fr; gap: 20px; padding-top: 10px; }
   .mode-grid { grid-template-columns: 1fr 1fr; }
   .roster-grid { grid-template-columns: 1fr 1fr; }

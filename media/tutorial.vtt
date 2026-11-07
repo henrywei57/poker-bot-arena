@@ -1,0 +1,221 @@
+WEBVTT
+
+1
+00:00:00.028 --> 00:00:02.002
+Welcome to Poker Bot Arena.
+
+2
+00:00:02.002 --> 00:00:09.242
+In this tutorial, you'll write a poker bot from scratch in Kicker, the arena's rule based language.
+
+3
+00:00:09.242 --> 00:00:12.825
+Then you'll test it, debug it, and watch it play.
+
+4
+00:00:13.177 --> 00:00:15.427
+There's no machine learning here.
+
+5
+00:00:15.427 --> 00:00:21.020
+A bot is just a list of rules that you can read from top to bottom, like this one.
+
+6
+00:00:21.371 --> 00:00:23.920
+Everything happens in the Bot Lab.
+
+7
+00:00:24.273 --> 00:00:28.670
+On the left are your bots, and the eight built in personalities.
+
+8
+00:00:28.670 --> 00:00:30.937
+In the middle is the code editor.
+
+9
+00:00:30.937 --> 00:00:33.961
+And on the right are tools to test your bot.
+
+10
+00:00:34.311 --> 00:00:36.319
+Press New to start a bot.
+
+11
+00:00:36.319 --> 00:00:39.774
+You get a small example that already works.
+
+12
+00:00:40.128 --> 00:00:41.567
+Here's the key idea.
+
+13
+00:00:41.567 --> 00:00:49.411
+Every time it's your turn, the program runs from top to bottom, and the first action it reaches is your move.
+
+14
+00:00:49.411 --> 00:00:54.665
+If it reaches no action, it checks when that's free, and folds otherwise.
+
+15
+00:00:55.017 --> 00:00:56.429
+Let's write our own.
+
+16
+00:00:56.429 --> 00:01:01.230
+Clear the editor, then give the bot a name, an avatar, and a colour.
+
+17
+00:01:01.230 --> 00:01:06.525
+These lines are optional, but they make your bot easy to spot at the table.
+
+18
+00:01:06.878 --> 00:01:09.513
+Now the rules for before the flop.
+
+19
+00:01:09.513 --> 00:01:15.481
+The words, on preflop, start a block that only runs before the flop is dealt.
+
+20
+00:01:15.837 --> 00:01:18.334
+Each rule reads like a sentence.
+
+21
+00:01:18.334 --> 00:01:21.611
+When something is true, then do something.
+
+22
+00:01:21.611 --> 00:01:27.385
+Our best hands, tens or better and big aces, raise to three times the bet.
+
+23
+00:01:27.737 --> 00:01:32.696
+Decent hands, in the top twenty percent, call when it's cheap.
+
+24
+00:01:33.045 --> 00:01:34.902
+Everything else folds.
+
+25
+00:01:34.902 --> 00:01:37.773
+And the word end closes the block.
+
+26
+00:01:38.125 --> 00:01:39.755
+Now, after the flop.
+
+27
+00:01:39.755 --> 00:01:42.934
+Kicker checks your code while you type.
+
+28
+00:01:42.934 --> 00:01:46.358
+Watch what happens if I misspell strength.
+
+29
+00:01:46.714 --> 00:01:48.994
+The line turns red straight away.
+
+30
+00:01:48.994 --> 00:01:54.452
+The problems list says it doesn't know that name, and suggests the one I meant.
+
+31
+00:01:54.803 --> 00:01:58.662
+Fix the spelling, and the bot is ready to play again.
+
+32
+00:01:59.012 --> 00:02:03.920
+Strength is our chance of beating one random hand, from zero to one.
+
+33
+00:02:03.920 --> 00:02:07.385
+Very strong hands bet three quarters of the pot.
+
+34
+00:02:07.740 --> 00:02:15.268
+Equity is our chance against everyone still in the hand, and pot odds is the share of the final pot we'd be paying.
+
+35
+00:02:15.268 --> 00:02:19.457
+When equity beats the price, calling wins money in the long run.
+
+36
+00:02:19.810 --> 00:02:21.320
+And a little bluff.
+
+37
+00:02:21.320 --> 00:02:28.078
+When nobody has bet, one time in five, we bet half the pot, and say something cheeky.
+
+38
+00:02:28.429 --> 00:02:32.313
+Anything else, check, or fold to a bet.
+
+39
+00:02:32.664 --> 00:02:34.878
+Save with control S.
+
+40
+00:02:35.234 --> 00:02:38.083
+Now let's see what the bot really does.
+
+41
+00:02:38.083 --> 00:02:42.832
+Try a spot deals a random hand, and plays it until it's our turn.
+
+42
+00:02:43.183 --> 00:02:48.583
+It shows our cards, the board, every value the bot can see, and its decision.
+
+43
+00:02:48.583 --> 00:02:52.511
+The line that made the decision lights up in the editor.
+
+44
+00:02:52.862 --> 00:02:53.963
+Is it any good?
+
+45
+00:02:53.963 --> 00:03:00.205
+The test tab plays a thousand hands against the opponents you pick, in a few seconds.
+
+46
+00:03:00.558 --> 00:03:07.781
+This is our score, in big blinds won per hundred hands, with a full leaderboard and a chip graph underneath.
+
+47
+00:03:08.133 --> 00:03:11.736
+Numbers are nice, but it's more fun to watch.
+
+48
+00:03:11.736 --> 00:03:17.021
+In Simulate, seat Night Owl with the built in bots, and press run.
+
+49
+00:03:17.374 --> 00:03:24.836
+You can watch at up to sixteen times speed, pause, step through every action, and show everyone's cards.
+
+50
+00:03:24.836 --> 00:03:29.356
+Every hand goes in the log, and the standings update as you go.
+
+51
+00:03:29.707 --> 00:03:31.996
+Let's watch a few hands.
+
+52
+00:03:39.110 --> 00:03:40.861
+That's the whole loop.
+
+53
+00:03:40.861 --> 00:03:43.249
+Write, check, test, and watch.
+
+54
+00:03:43.249 --> 00:03:53.996
+Open any built in bot to see how it's made, share yours with a link, or open an online table, and let your friends' bots take on yours.
+
+55
+00:03:53.996 --> 00:03:55.907
+Good luck at the tables!

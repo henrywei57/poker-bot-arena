@@ -1,7 +1,7 @@
 // Fold / check / call / raise controls for a human player, with a bet
 // slider, pot-fraction presets and keyboard shortcuts (F, C, R, A).
 
-import { h, btn } from './dom.js';
+import { h, btn, fill } from './dom.js';
 import { raiseTarget } from '../engine/actions.js';
 import { formatChips } from '../util.js';
 
@@ -99,6 +99,6 @@ export class ActionBar {
       p.toCall > 0 ? h('span', null, 'To call ', h('b', null, formatChips(p.toCall))) : null,
       p.toCall > 0 ? h('span', { title: 'Share of the final pot you pay' }, 'Odds ', h('b', null, `${Math.round((p.toCall / (p.pot + p.toCall)) * 100)}%`)) : null,
       h('span', { class: 'kbd-hint' }, 'Keys: F fold · C check/call · R raise · A all-in'));
-    this.root.replaceChildren(info, h('div', { class: 'ab-main' }, h('div', { class: 'ab-buttons' }, parts), raiseBox));
+    fill(this.root, info, h('div', { class: 'ab-main' }, h('div', { class: 'ab-buttons' }, parts), raiseBox));
   }
 }

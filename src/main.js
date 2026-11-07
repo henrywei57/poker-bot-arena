@@ -9,6 +9,7 @@ import { renderTable } from './ui/screens/table-screen.js';
 import { renderLab, confirmLeaveLab } from './ui/screens/lab.js';
 import { renderStyle } from './ui/screens/style.js';
 import { renderOnline, renderJoin } from './ui/screens/online.js';
+import { renderTutorial } from './ui/screens/tutorial.js';
 import { decodeShared, saveBot } from './bots/store.js';
 import { compile } from './lang/interpreter.js';
 import { highlightHTML } from './ui/editor.js';
@@ -21,9 +22,10 @@ const NAV = [
   ['/tournament', 'Tournament', 'trophy'],
   ['/online', 'Online', 'globe'],
   ['/lab', 'Bot Lab', 'code'],
+  ['/tutorial', 'Tutorial', 'play'],
   ['/cards', 'Cards', 'palette'],
 ];
-const TITLES = { '/': '', '/play': 'Play', '/sim': 'Simulate', '/tournament': 'Tournament', '/online': 'Online', '/lab': 'Bot Lab', '/cards': 'Cards & table', '/table': 'Table', '/join': 'Join' };
+const TITLES = { '/': '', '/play': 'Play', '/sim': 'Simulate', '/tournament': 'Tournament', '/online': 'Online', '/lab': 'Bot Lab', '/cards': 'Cards & table', '/table': 'Table', '/join': 'Join', '/tutorial': 'Coding tutorial' };
 
 const livePill = h('button', { type: 'button', class: 'live-pill', hidden: true, onClick: () => navigate('/table') }, h('i'), h('span', null, 'Live table'));
 const navLinks = NAV.map(([path, label, ic]) => h('a', { href: `#${path}`, class: 'nav-link', dataset: { path } }, icon(ic, 16), h('span', null, label)));
@@ -79,6 +81,7 @@ async function route() {
     case 'table': main.className = 'wide'; fn = () => renderTable(main); break;
     case 'lab': main.className = 'wide'; fn = () => renderLab(main, seg.slice(2).join('/')); break;
     case 'cards': fn = () => renderStyle(main); break;
+    case 'tutorial': fn = () => renderTutorial(main); break;
     case 'online': fn = () => renderOnline(main); break;
     case 'join': fn = () => renderJoin(main, (seg[2] || '').replace(/[^A-Za-z0-9_-]/g, '')); break;
     default: navigate('/'); return;

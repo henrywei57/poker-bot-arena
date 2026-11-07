@@ -181,6 +181,12 @@ test('compile errors point at the line and suggest fixes', () => {
   assert.match(e.message, /top level/);
 });
 
+test('a bot that does not parse yet still shows its name', () => {
+  const c = compile(['bot "Night Owl"', 'avatar "🦉"', 'color "#7dd3fc"', 'on preflop', '  fold', ''].join('\n'));
+  assert.equal(c.ok, false);
+  assert.deepEqual(c.meta, { name: 'Night Owl', avatar: '🦉', color: '#7dd3fc' });
+});
+
 test('runtime type errors are reported instead of crashing, and the bot check-folds', () => {
   const r = decide('let s = "abc"\nwhen s > 3 then call\nraise pot');
   assert.ok(r.error);

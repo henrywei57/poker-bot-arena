@@ -1,0 +1,45 @@
+{
+  "duration": 238.46666666666667,
+  "chapters": [
+    {
+      "t": 0,
+      "title": "Introduction"
+    },
+    {
+      "t": 21.370686054229736,
+      "title": "Open the Bot Lab"
+    },
+    {
+      "t": 34.310686111450195,
+      "title": "Start a new bot"
+    },
+    {
+      "t": 55.016685962677,
+      "title": "Name your bot"
+    },
+    {
+      "t": 66.87768602371216,
+      "title": "Rules before the flop"
+    },
+    {
+      "t": 98.12468600273132,
+      "title": "Mistakes are caught live"
+    },
+    {
+      "t": 119.01168608665466,
+      "title": "Rules after the flop"
+    },
+    {
+      "t": 152.6636860370636,
+      "title": "Save and try a spot"
+    },
+    {
+      "t": 172.86168599128723,
+      "title": "Test it"
+    },
+    {
+      "t": 188.1326858997345,
+      "title": "Watch it play"
+    }
+  ]
+}

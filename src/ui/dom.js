@@ -31,6 +31,12 @@ export function append(el, children) {
   return el;
 }
 
+/** Replace an element's children. Like replaceChildren, but skips null/false. */
+export function fill(el, ...children) {
+  el.replaceChildren();
+  return append(el, children);
+}
+
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 

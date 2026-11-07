@@ -28,7 +28,7 @@ export function compile(source) {
   try {
     ast = parse(String(source ?? ''));
   } catch (e) {
-    if (e instanceof KickerError) return { ok: false, errors: [{ message: e.message, line: e.line, col: e.col, hint: e.hint }], meta: {} };
+    if (e instanceof KickerError) return { ok: false, errors: [{ message: e.message, line: e.line, col: e.col, hint: e.hint }], meta: metaFromSource(source) };
     throw e;
   }
   const errors = check(ast);
@@ -39,6 +39,19 @@ export function compile(source) {
   if (meta.name) meta.name = meta.name.slice(0, 24);
   if (meta.avatar) meta.avatar = [...meta.avatar].slice(0, 2).join('');
   return { ok: errors.length === 0, program: errors.length ? null : ast, errors, meta };
+}
+
+/** Best-effort bot name etc. from top-level lines, for code that does not parse yet. */
+function metaFromSource(source) {
+  const meta = {};
+  for (const line of String(source ?? '').split(/\r?\n/)) {
+    const m = /^\s*(bot|avatar|color|desc|author)\s+"([^"]*)"/.exec(line);
+    if (m && meta[m[1] === 'bot' ? 'name' : m[1]] === undefined) meta[m[1] === 'bot' ? 'name' : m[1]] = m[2];
+  }
+  if (meta.name) meta.name = meta.name.slice(0, 24);
+  if (meta.avatar) meta.avatar = [...meta.avatar].slice(0, 2).join('');
+  if (meta.color && !/^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(meta.color)) delete meta.color;
+  return meta;
 }
 
 function check(ast) {

@@ -23,6 +23,7 @@ const MODES = [
   { path: '/tournament', icon: 'trophy', title: 'Tournament', text: 'Multi-table freezeouts with rising blinds. Watch one, or run a series of 100.' },
   { path: '/online', icon: 'globe', title: 'Online table', text: 'Open a table and send friends a link. They join as themselves or with their own bot.' },
   { path: '/lab', icon: 'code', title: 'Bot Lab', text: 'Write a bot in Kicker, test it on random spots, and benchmark it in seconds.' },
+  { path: '/tutorial', icon: 'play', title: 'Coding tutorial', text: 'A narrated video: write your first bot from an empty editor, test it, and watch it play.' },
   { path: '/cards', icon: 'palette', title: 'Cards & table', text: 'Pick card faces, backs, colours, a monogram and the felt.' },
 ];
 
@@ -38,7 +39,8 @@ export function renderHome(main) {
         h('p', { class: 'lead' }, 'Program a bot in ', h('b', null, 'Kicker'), ', a tiny logic language made for poker: no machine learning, just rules you write. Pit it against eight personalities, friends, or your own seat at the table.'),
         h('div', { class: 'hero-cta' },
           h('button', { class: 'btn primary lg', onClick: () => navigate('/play') }, icon('play'), h('span', null, 'Play now')),
-          h('button', { class: 'btn lg', onClick: () => navigate('/lab') }, icon('code'), h('span', null, 'Build a bot')))),
+          h('button', { class: 'btn lg', onClick: () => navigate('/lab') }, icon('code'), h('span', null, 'Build a bot')),
+          h('button', { class: 'btn lg ghost', onClick: () => navigate('/tutorial') }, icon('play'), h('span', null, 'Watch the 4-minute tutorial')))),
       h('div', { class: 'hero-art' }, hand, h('div', { class: 'hero-code' }, h('div', { class: 'code-head' }, h('i'), h('i'), h('i'), h('span', null, 'tight-aggressive.kick')), code))),
     h('div', { class: 'mode-grid' }, MODES.map((m) => h('button', { class: 'mode-card', onClick: () => navigate(m.path) },
       h('span', { class: 'mode-icon' }, icon(m.icon, 22)), h('h3', null, m.title), h('p', null, m.text)))),

@@ -9,6 +9,10 @@
     "start": "node tools/serve.mjs",
     "test": "node --test",
     "gen:preflop": "node tools/gen-preflop.mjs",
-    "gen:docs": "node tools/gen-docs.mjs"
+    "gen:docs": "node tools/gen-docs.mjs",
+    "video": "node tools/tutorial/record.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.0"
   }
 }
